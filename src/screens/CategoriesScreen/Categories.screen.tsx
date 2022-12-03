@@ -1,4 +1,5 @@
-import { NavigationProp, ParamListBase } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FlatList } from "react-native";
 import { Screens } from "../../../config/Screen.enum";
 import { CATEGORIES } from "../../../data/dummy-data";
@@ -6,14 +7,18 @@ import Category from "../../../models/category";
 import { CategoryGridTile } from "../../components/CategoryGridTile/CategoryGridTile";
 
 type Props = {
-  navigation: NavigationProp<ParamListBase>;
+  // navigation: NavigationProp<ParamListBase>;
+};
+
+type NavProp = {
+  Meals: { id: string } | undefined;
 };
 
 export const CategoriesScreen = (props: Props) => {
-  const { navigation } = props;
-  const render = ({ title, color }: Category) => {
+  const navigation = useNavigation<NativeStackNavigationProp<NavProp>>();
+  const render = ({ id, title, color }: Category) => {
     const onPress = () => {
-      navigation.navigate(Screens.Meals);
+      navigation.navigate(Screens.Meals, { id });
     };
     return <CategoryGridTile title={title} color={color} onPress={onPress} />;
   };
