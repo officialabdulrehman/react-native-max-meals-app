@@ -27,6 +27,8 @@ export const MealsScreen = (props: Props) => {
         data={meals}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => render(item)}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
       />
     </View>
   );

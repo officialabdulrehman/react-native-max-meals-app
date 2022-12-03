@@ -28,6 +28,8 @@ export const CategoriesScreen = (props: Props) => {
       renderItem={(itemData) => render(itemData.item)}
       keyExtractor={(item: Category) => item.id}
       numColumns={2}
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
     />
   );
 };
