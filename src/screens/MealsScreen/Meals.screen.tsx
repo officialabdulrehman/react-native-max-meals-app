@@ -1,10 +1,12 @@
-import { RouteProp, useRoute } from "@react-navigation/native";
-import { FlatList, View } from "react-native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useLayoutEffect } from "react";
+import { FlatList } from "react-native";
 import { Screens } from "../../../config/Screen.enum";
-import { MEALS } from "../../../data/dummy-data";
+import { CATEGORIES, MEALS } from "../../../data/dummy-data";
+import Category from "../../../models/category";
 import Meal from "../../../models/meal";
 import { MealItem } from "../../components/MealItem/MealItem";
-import { styles } from "./Meals.styles";
 
 type Props = {};
 
@@ -14,22 +16,34 @@ type RouteParams = {
   };
 };
 
+type NavProps = {
+  Categories: { id: string } | undefined;
+};
+
 export const MealsScreen = (props: Props) => {
-  const { params } = useRoute<RouteProp<RouteParams, Screens.Categories>>();
-  const { id } = params;
+  const navigation = useNavigation<NativeStackNavigationProp<NavProps>>();
+  const route = useRoute<RouteProp<RouteParams, Screens.Categories>>();
+  const { id } = route.params;
+
+  useLayoutEffect(() => {
+    const title = CATEGORIES.find(
+      (category: Category) => category.id === id
+    )?.title;
+    navigation.setOptions({
+      title,
+    });
+  }, [id, navigation]);
   const meals = MEALS.filter((meal: Meal) => meal.categoryIds.indexOf(id) >= 0);
   const render = (item: Meal) => {
     return <MealItem meal={item} />;
   };
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={meals}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => render(item)}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-      />
-    </View>
+    <FlatList
+      data={meals}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => render(item)}
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
+    />
   );
 };

@@ -2,7 +2,7 @@ import { Platform, StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
+    backgroundColor: "#f1f1f1",
     overflow: Platform.OS === "android" ? "hidden" : "visible",
     margin: 16,
     borderRadius: 10,
@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
   },
   title: {
     fontFamily: "sans-serif-medium",
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#f1f1f1",
     color: "rgba(79, 195, 247, 1)",
     fontSize: 20,
     textAlign: "center",

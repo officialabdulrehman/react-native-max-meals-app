@@ -10,12 +10,12 @@ type Props = {
   // navigation: NavigationProp<ParamListBase>;
 };
 
-type NavProp = {
+type NavProps = {
   Meals: { id: string } | undefined;
 };
 
 export const CategoriesScreen = (props: Props) => {
-  const navigation = useNavigation<NativeStackNavigationProp<NavProp>>();
+  const navigation = useNavigation<NativeStackNavigationProp<NavProps>>();
   const render = ({ id, title, color }: Category) => {
     const onPress = () => {
       navigation.navigate(Screens.Meals, { id });
