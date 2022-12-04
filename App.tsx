@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { Screens } from "./config/Screen.enum";
 import { CategoriesScreen } from "./src/screens/CategoriesScreen/Categories.screen";
+import { MealDetail } from "./src/screens/MealDetailScreen/MealDetail.screen";
 import { MealsScreen } from "./src/screens/MealsScreen/Meals.screen";
 
 const navigationStack = createNativeStackNavigator();
@@ -38,6 +39,10 @@ export default function App() {
             // options={({ navigation, route }) => ({
             //   title: (route.params as { id: string }).id,
             // })}
+          />
+          <navigationStack.Screen
+            name={Screens.MealDetail}
+            component={MealDetail}
           />
         </navigationStack.Navigator>
       </NavigationContainer>

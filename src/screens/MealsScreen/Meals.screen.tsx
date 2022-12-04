@@ -18,6 +18,7 @@ type RouteParams = {
 
 type NavProps = {
   Categories: { id: string } | undefined;
+  MealDetail: { meal: Meal } | undefined;
 };
 
 export const MealsScreen = (props: Props) => {
@@ -33,10 +34,15 @@ export const MealsScreen = (props: Props) => {
       title,
     });
   }, [id, navigation]);
+
   const meals = MEALS.filter((meal: Meal) => meal.categoryIds.indexOf(id) >= 0);
   const render = (item: Meal) => {
-    return <MealItem meal={item} />;
+    const onPress = () => {
+      navigation.navigate(Screens.MealDetail, { meal: item });
+    };
+    return <MealItem meal={item} onPress={onPress} />;
   };
+
   return (
     <FlatList
       data={meals}

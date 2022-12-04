@@ -4,10 +4,11 @@ import { styles } from "./MealItem.styles";
 
 type Props = {
   meal: Meal;
+  onPress: () => void;
 };
 
 export const MealItem = (props: Props) => {
-  const { meal } = props;
+  const { meal, onPress } = props;
   const { title, imageUrl, duration, complexity, affordability } = meal;
   return (
     <View style={styles.container}>
@@ -17,6 +18,7 @@ export const MealItem = (props: Props) => {
           radius: 300,
           foreground: true,
         }}
+        onPress={onPress}
       >
         <View style={styles.innerContainer}>
           <View>
