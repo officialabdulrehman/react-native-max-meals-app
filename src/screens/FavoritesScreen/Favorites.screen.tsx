@@ -1,12 +1,12 @@
-import { Text, View } from "react-native";
-import { styles } from "./Favorites.styles";
+import { useContext } from "react";
+import { MEALS } from "../../../data/dummy-data";
+import { MealList } from "../../components/MealList/MealList";
+import { FavoritesContext } from "../../store/context/favorites.context";
 
 type Props = {};
 
 export const FavoritesScreen = () => {
-  return (
-    <View style={styles.container}>
-      <Text>FavoritesScreen</Text>
-    </View>
-  );
+  const favoriteCtx = useContext(FavoritesContext);
+  const meals = MEALS.filter(({ id }) => favoriteCtx.ids.includes(id));
+  return <MealList meals={meals} />;
 };
