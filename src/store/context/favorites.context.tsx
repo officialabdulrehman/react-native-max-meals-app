@@ -10,7 +10,7 @@ type Props = {
   children: JSX.Element | JSX.Element[];
 };
 
-const FavoritesContext = createContext<FavoritesContextParams>({
+export const FavoritesContext = createContext<FavoritesContextParams>({
   ids: [],
   addFavorite: (id: string) => {},
   removeFavorite: (id: string) => {},

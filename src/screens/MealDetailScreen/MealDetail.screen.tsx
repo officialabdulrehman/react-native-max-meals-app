@@ -1,10 +1,11 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useLayoutEffect } from "react";
+import { useContext, useLayoutEffect } from "react";
 import { Image, Text, View } from "react-native";
 import { Screens } from "../../../config/Screen.enum";
 import Meal from "../../../models/meal";
 import { IconButton } from "../../components/IconButton/IconButton";
+import { FavoritesContext } from "../../store/context/favorites.context";
 import { styles } from "./MealDetail.styles";
 
 type Props = {};
@@ -18,10 +19,12 @@ type RouteParams = {
 type NavProps = {};
 
 export const MealDetail = (props: Props) => {
+  const favoriteCtx = useContext(FavoritesContext);
   const navigation = useNavigation<NativeStackNavigationProp<NavProps>>();
   const route = useRoute<RouteProp<RouteParams, Screens.Meals>>();
   const {
     meal: {
+      id,
       title,
       imageUrl,
       duration,
@@ -31,6 +34,15 @@ export const MealDetail = (props: Props) => {
       steps,
     },
   } = route.params;
+  const isMealFav = favoriteCtx.ids.includes(id);
+
+  const handleFavStatusChange = () => {
+    if (isMealFav) {
+      favoriteCtx.removeFavorite(id);
+    } else {
+      favoriteCtx.addFavorite(id);
+    }
+  };
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -38,12 +50,12 @@ export const MealDetail = (props: Props) => {
         <IconButton
           color="rgba(79, 195, 247, 1)"
           size={24}
-          title="star-outline"
-          onPress={() => {}}
+          title={isMealFav ? "star" : "star-outline"}
+          onPress={handleFavStatusChange}
         />
       ),
     });
-  }, [navigation]);
+  }, [navigation, handleFavStatusChange]);
 
   return (
     <View style={styles.container}>
