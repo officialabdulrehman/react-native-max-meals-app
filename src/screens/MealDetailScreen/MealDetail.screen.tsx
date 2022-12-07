@@ -1,11 +1,16 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useContext, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import { Image, Text, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import { Screens } from "../../../config/Screen.enum";
 import Meal from "../../../models/meal";
 import { IconButton } from "../../components/IconButton/IconButton";
-import { FavoritesContext } from "../../store/context/favorites.context";
+import {
+  addFavorite,
+  removeFavorite,
+} from "../../store/redux/slices/favorites";
+import { RootState } from "../../store/redux/store";
 import { styles } from "./MealDetail.styles";
 
 type Props = {};
@@ -19,7 +24,11 @@ type RouteParams = {
 type NavProps = {};
 
 export const MealDetail = (props: Props) => {
-  const favoriteCtx = useContext(FavoritesContext);
+  // const favoriteCtx = useContext(FavoritesContext);
+  const favoriteMealIds = useSelector(
+    (state: RootState) => state.favoriteMeals.ids
+  );
+  const dispatch = useDispatch();
   const navigation = useNavigation<NativeStackNavigationProp<NavProps>>();
   const route = useRoute<RouteProp<RouteParams, Screens.Meals>>();
   const {
@@ -34,13 +43,16 @@ export const MealDetail = (props: Props) => {
       steps,
     },
   } = route.params;
-  const isMealFav = favoriteCtx.ids.includes(id);
+  // const isMealFav = favoriteCtx.ids.includes(id);
+  const isMealFav = favoriteMealIds.includes(id);
 
   const handleFavStatusChange = () => {
     if (isMealFav) {
-      favoriteCtx.removeFavorite(id);
+      // favoriteCtx.removeFavorite(id);
+      dispatch(removeFavorite(id));
     } else {
-      favoriteCtx.addFavorite(id);
+      // favoriteCtx.addFavorite(id);
+      dispatch(addFavorite(id));
     }
   };
 

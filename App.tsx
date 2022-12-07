@@ -2,6 +2,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
+import { Provider } from "react-redux";
 import { Screens } from "./config/Screen.enum";
 import { IconButton } from "./src/components/IconButton/IconButton";
 import { CategoriesScreen } from "./src/screens/CategoriesScreen/Categories.screen";
@@ -9,6 +10,7 @@ import { FavoritesScreen } from "./src/screens/FavoritesScreen/Favorites.screen"
 import { MealDetail } from "./src/screens/MealDetailScreen/MealDetail.screen";
 import { MealsScreen } from "./src/screens/MealsScreen/Meals.screen";
 import { FavoritesContextProvider } from "./src/store/context/favorites.context";
+import { store } from "./src/store/redux/store";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -67,31 +69,33 @@ export default function App() {
   return (
     <>
       <StatusBar style="dark" />
-      <FavoritesContextProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{
-              headerStyle: { backgroundColor: "white" },
-              headerTintColor: "rgba(0, 179, 255, 1)",
-              headerTitleAlign: "center",
-              contentStyle: {
-                backgroundColor: "white",
-              },
-            }}
-          >
-            <Stack.Screen
-              name={Screens.Home}
-              component={DrawerNavigator}
-              options={{
-                title: Screens.Home,
-                headerShown: false,
+      <Provider store={store}>
+        <FavoritesContextProvider>
+          <NavigationContainer>
+            <Stack.Navigator
+              screenOptions={{
+                headerStyle: { backgroundColor: "white" },
+                headerTintColor: "rgba(0, 179, 255, 1)",
+                headerTitleAlign: "center",
+                contentStyle: {
+                  backgroundColor: "white",
+                },
               }}
-            />
-            <Stack.Screen name={Screens.Meals} component={MealsScreen} />
-            <Stack.Screen name={Screens.MealDetail} component={MealDetail} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </FavoritesContextProvider>
+            >
+              <Stack.Screen
+                name={Screens.Home}
+                component={DrawerNavigator}
+                options={{
+                  title: Screens.Home,
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen name={Screens.Meals} component={MealsScreen} />
+              <Stack.Screen name={Screens.MealDetail} component={MealDetail} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </FavoritesContextProvider>
+      </Provider>
     </>
   );
 }
