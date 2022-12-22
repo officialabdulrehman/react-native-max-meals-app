@@ -49,10 +49,11 @@ export const MealDetail = (props: Props) => {
   const handleFavStatusChange = () => {
     if (isMealFav) {
       // favoriteCtx.removeFavorite(id);
-      dispatch(removeFavorite(id));
+      dispatch(removeFavorite({ id }));
     } else {
+      console.log("isMealFav => ", isMealFav, id);
       // favoriteCtx.addFavorite(id);
-      dispatch(addFavorite(id));
+      dispatch(addFavorite({ id }));
     }
   };
 

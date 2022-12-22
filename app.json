@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "maximillian-meals-app",
+    "name": "Recipe Book",
     "slug": "maximillian-meals-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,16 +18,24 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "versionCode": 1,
+      "package": "com.nizthedev.maximillianmealsapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9a00be94-22cf-426a-8b15-8145320159c7"
+      }
     }
   }
 }

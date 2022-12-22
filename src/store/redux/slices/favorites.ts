@@ -11,9 +11,8 @@ const favoritesSlice = createSlice({
     addFavorite: (state, action: PayloadAction<{ id: string }>) => {
       state.ids.push(action.payload.id)
     },
-    removeFavorite: (state, action) => {
-      state.ids.filter((id) => id !== action.payload.id)
-      // state.ids.splice(state.ids.indexOf(action.payload.id), 1)
+    removeFavorite: (state, action: PayloadAction<{ id: string }>) => {
+      state.ids.splice(state.ids.indexOf(action.payload.id), 1)
     }
   }
 })
